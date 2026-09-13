@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Management</title>
+
+    <link rel="stylesheet" href="user-management.css">
+</head>
+
+<body>
+
+    <header class="top-header">
+        <div>
+            <h2>Welcome</h2>
+            <p>User Management Dashboard</p>
+        </div>
+
+        <button onclick="logout()">Logout</button>
+    </header>
+
+    <main class="container">
+
+        <div class="page-header">
+
+            <div>
+                <h1>User Management</h1>
+                <p id="message" class="message"></p>
+            </div>
+
+            <button class="add-user-btn" onclick="openAddUserModal()">
+                + Add User
+            </button>
+
+        </div>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="userTableBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+
+    <div id="editModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>Edit User</h2>
+
+            <input type="hidden" id="editId">
+
+            <label for="editFullName">Full Name</label>
+
+            <input
+                type="text"
+                id="editFullName"
+                placeholder="Enter full name"
+            >
+
+            <label for="editEmail">Email</label>
+
+            <input
+                type="email"
+                id="editEmail"
+                placeholder="Enter email"
+            >
+
+            <div class="modal-buttons">
+
+                <button onclick="updateUser()">
+                    Save
+                </button>
+
+                <button onclick="closeModal()">
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="addUserModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>Add User</h2>
+
+            <label for="addFullName">Full Name</label>
+
+            <input
+                type="text"
+                id="addFullName"
+                placeholder="Enter full name"
+            >
+
+            <label for="addEmail">Email</label>
+
+            <input
+                type="email"
+                id="addEmail"
+                placeholder="Enter email"
+            >
+
+            <label for="addPassword">Password</label>
+
+            <input
+                type="password"
+                id="addPassword"
+                placeholder="Enter password"
+            >
+
+            <div class="modal-buttons">
+
+                <button onclick="addUser()">
+                    Add User
+                </button>
+
+                <button onclick="closeAddUserModal()">
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="user-management.js"></script>
+
+</body>
+
+</html>

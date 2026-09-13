@@ -1,0 +1,427 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ================================
+   BODY
+================================ */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.top-header {
+    height: 75px;
+    background: #1f2937;
+    color: white;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 40px;
+}
+
+.top-header h2 {
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+.top-header p {
+    font-size: 13px;
+    color: #d1d5db;
+}
+
+
+/* ================================
+   LOGOUT BUTTON
+================================ */
+
+.top-header button {
+    background: #dc3545;
+    color: white;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 10px 20px;
+
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.top-header button:hover {
+    background: #b02a37;
+}
+
+
+/* ================================
+   MAIN CONTAINER
+================================ */
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+
+    margin: 40px auto;
+}
+
+.container h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.message {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+
+/* ================================
+   TABLE CONTAINER
+================================ */
+
+.table-container {
+    background: white;
+
+    border-radius: 10px;
+
+    padding: 20px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+    overflow-x: auto;
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #1f2937;
+    color: white;
+}
+
+th,
+td {
+    padding: 14px 16px;
+    text-align: left;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    font-size: 14px;
+}
+
+td {
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background: #f8f9fa;
+}
+
+
+/* ================================
+   ACTION BUTTONS
+================================ */
+
+td button {
+    border: none;
+    border-radius: 5px;
+
+    padding: 7px 14px;
+
+    margin-right: 6px;
+
+    cursor: pointer;
+    font-size: 13px;
+}
+
+
+/* EDIT */
+
+td button:first-child {
+    background: #0d6efd;
+    color: white;
+}
+
+td button:first-child:hover {
+    background: #0b5ed7;
+}
+
+
+/* DELETE */
+
+td button:last-child {
+    background: #dc3545;
+    color: white;
+}
+
+td button:last-child:hover {
+    background: #b02a37;
+}
+
+
+/* ================================
+   EDIT MODAL
+================================ */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* ================================
+   MODAL CONTENT
+================================ */
+
+.modal-content {
+    width: 400px;
+    max-width: 90%;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+}
+
+
+/* ================================
+   FORM LABELS
+================================ */
+
+.modal-content label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+/* ================================
+   FORM INPUTS
+================================ */
+
+.modal-content input[type="text"],
+.modal-content input[type="email"] {
+    width: 100%;
+
+    padding: 11px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 5px;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.modal-content input:focus {
+    border-color: #0d6efd;
+}
+
+
+/* ================================
+   MODAL BUTTONS
+================================ */
+
+.modal-buttons {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+.modal-buttons button {
+    padding: 9px 18px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+
+/* SAVE */
+
+.modal-buttons button:first-child {
+    background: #198754;
+    color: white;
+}
+
+.modal-buttons button:first-child:hover {
+    background: #157347;
+}
+
+
+/* CANCEL */
+
+.modal-buttons button:last-child {
+    background: #6c757d;
+    color: white;
+}
+
+.modal-buttons button:last-child:hover {
+    background: #5c636a;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+    .top-header {
+        padding: 0 20px;
+    }
+
+    .top-header h2 {
+        font-size: 18px;
+    }
+
+    .container {
+        width: 95%;
+        margin: 25px auto;
+    }
+
+    .container h1 {
+        font-size: 24px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+    }
+
+    .modal-content {
+        padding: 22px;
+    }
+}
+
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+/* ================================
+   ADD USER BUTTON
+================================ */
+
+.add-user-btn {
+    background: #198754;
+    color: white;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 11px 20px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.add-user-btn:hover {
+    background: #157347;
+}
+
+
+/* ================================
+   PASSWORD INPUT
+================================ */
+
+.modal-content input[type="password"] {
+    width: 100%;
+
+    padding: 11px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 5px;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.modal-content input[type="password"]:focus {
+    border-color: #0d6efd;
+}
+
+
+/* ================================
+   MOBILE ADD BUTTON
+================================ */
+
+@media (max-width: 600px) {
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .add-user-btn {
+        width: 100%;
+    }
+}
+

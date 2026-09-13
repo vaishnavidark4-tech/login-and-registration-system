@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="user-management.css">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>User Management</title>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>User Management</h1>
+
+        <button id="logoutButton">
+            Logout
+        </button>
+
+    </header>
+
+
+    <main>
+
+        <p id="welcomeMessage">
+            Welcome
+        </p>
+
+
+       <div class="user-card">
+
+    <h2>Users</h2>
+    <div class="user-actions">
+
+    <button id="addUserButton">
+        + Add User
+    </button>
+    <div id="userFormContainer" class="user-form-container">
+
+    <h3>Add New User</h3>
+
+    <form id="userForm">
+
+        <input
+            type="text"
+            id="fullName"
+            placeholder="Full Name"
+            required
+        >
+
+        <input
+            type="email"
+            id="userEmail"
+            placeholder="Email"
+            required
+        >
+
+        <input
+            type="password"
+            id="userPassword"
+            placeholder="Password"
+            required
+        >
+
+        <select id="userRole">
+
+            <option value="User">
+                User
+            </option>
+
+            <option value="Admin">
+                Admin
+            </option>
+
+        </select>
+
+
+        <div class="form-buttons">
+
+            <button
+                type="submit"
+                id="saveUserButton">
+
+                Save User
+
+            </button>
+
+
+            <button
+                type="button"
+                id="cancelUserButton">
+
+                Cancel
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+</div>
+
+    <div class="table-container">
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+            </tr>
+
+        </thead>
+
+
+        <tbody id="usersContainer">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</div>
+
+    </main>
+<script src="user-management.js"></script>
+</body>
+
+
+
+
+</body>
+
+</html>
