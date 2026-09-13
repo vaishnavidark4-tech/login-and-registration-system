@@ -73,11 +73,22 @@ public class UserManagementService {
         );
 
 
-        // Default values
+        // Set default values only if
+        // role/status were not provided
 
-        user.setRole("User");
+        if (user.getRole() == null ||
+                user.getRole().trim().isEmpty()) {
 
-        user.setStatus("Active");
+            user.setRole("User");
+        }
+
+
+        if (user.getStatus() == null ||
+                user.getStatus().trim().isEmpty()) {
+
+            user.setStatus("Active");
+        }
+
 
         user.setPhone(null);
 
@@ -103,13 +114,54 @@ public class UserManagementService {
                         );
 
 
+        // Update full name
+
         existingUser.setFullName(
                 updatedUser.getFullName()
         );
 
+
+        // Update email
+
         existingUser.setEmail(
                 updatedUser.getEmail()
         );
+
+
+        // Update role
+
+        if (updatedUser.getRole() != null &&
+                !updatedUser.getRole().trim().isEmpty()) {
+
+            existingUser.setRole(
+                    updatedUser.getRole()
+            );
+        }
+
+
+        // Update status
+
+        if (updatedUser.getStatus() != null &&
+                !updatedUser.getStatus().trim().isEmpty()) {
+
+            existingUser.setStatus(
+                    updatedUser.getStatus()
+            );
+        }
+
+
+        // Update password only when
+        // a new password is provided
+
+        if (updatedUser.getPassword() != null &&
+                !updatedUser.getPassword().trim().isEmpty()) {
+
+            existingUser.setPassword(
+                    passwordEncoder.encode(
+                            updatedUser.getPassword()
+                    )
+            );
+        }
 
 
         return userRepository.save(existingUser);
