@@ -1,10 +1,11 @@
-
 package com.vaishnavi.loginapp.config;
 
 import com.vaishnavi.loginapp.security.JwtAuthenticationFilter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import org.springframework.http.HttpMethod;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -86,6 +87,13 @@ public class SecurityConfig {
                         // Login and Register are public
                         .requestMatchers(
                                 "/api/auth/**"
+                        ).permitAll()
+
+
+                        // Allow CORS preflight requests
+                        .requestMatchers(
+                                HttpMethod.OPTIONS,
+                                "/**"
                         ).permitAll()
 
 
@@ -171,4 +179,3 @@ public class SecurityConfig {
         return source;
     }
 }
-

@@ -41,7 +41,7 @@ async function login() {
     try {
 
         const response = await fetch(
-            "http://localhost:8080/api/auth/login",
+        "https://login-and-registration-system-qggm.onrender.com/api/auth/login",
             {
                 method: "POST",
 

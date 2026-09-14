@@ -1,305 +1,438 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>User Management</title>
+```
+<meta charset="UTF-8">
 
-    <link rel="stylesheet" href="user-management.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>User Management</title>
+
+<link rel="stylesheet" href="user-management.css">
+```
+
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <header class="top-header">
+```
+<!-- ========================= -->
+<!-- HEADER -->
+<!-- ========================= -->
+
+<header class="top-header">
+
+    <div>
+
+        <h2>Welcome</h2>
+
+        <p>User Management Dashboard</p>
+
+    </div>
+
+
+    <button onclick="logout()">
+
+        Logout
+
+    </button>
+
+</header>
+
+
+
+<!-- ========================= -->
+<!-- MAIN CONTENT -->
+<!-- ========================= -->
+
+<main class="container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
 
         <div>
-            <h2>Welcome</h2>
-            <p>User Management Dashboard</p>
+
+            <h1>User Management</h1>
+
+            <p id="message" class="message"></p>
+
         </div>
 
-        <button onclick="logout()">Logout</button>
 
-    </header>
+        <button
+            class="add-user-btn"
+            onclick="openAddUserModal()">
+
+            + Add User
+
+        </button>
+
+    </div>
 
 
-    <!-- MAIN CONTENT -->
-    <main class="container">
 
-        <div class="page-header">
+    <!-- ========================= -->
+    <!-- USER TABLE -->
+    <!-- ========================= -->
 
-            <div>
-                <h1>User Management</h1>
-                <p id="message" class="message"></p>
-            </div>
+    <div class="table-container">
 
-            <button
-                class="add-user-btn"
-                onclick="openAddUserModal()">
+        <table>
 
-                + Add User
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Full Name</th>
+
+                    <th>Email</th>
+
+                    <th>Password</th>
+
+                    <th>Role</th>
+
+                    <th>Status</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="userTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</main>
+
+
+
+<!-- ========================= -->
+<!-- EDIT USER MODAL -->
+<!-- ========================= -->
+
+<div id="editModal" class="modal">
+
+
+    <div class="modal-content">
+
+
+        <h2>Edit User</h2>
+
+
+
+        <!-- HIDDEN ID -->
+
+        <input
+            type="hidden"
+            id="editId"
+        >
+
+
+
+        <!-- FULL NAME -->
+
+        <label for="editFullName">
+
+            Full Name
+
+        </label>
+
+
+        <input
+            type="text"
+            id="editFullName"
+            placeholder="Enter full name"
+        >
+
+
+
+        <!-- EMAIL -->
+
+        <label for="editEmail">
+
+            Email
+
+        </label>
+
+
+        <input
+            type="email"
+            id="editEmail"
+            placeholder="Enter email"
+        >
+
+
+
+        <!-- PASSWORD -->
+
+        <label for="editPassword">
+
+            New Password
+
+        </label>
+
+
+        <input
+            type="password"
+            id="editPassword"
+            placeholder="Leave blank to keep current password"
+        >
+
+
+
+        <!-- ROLE -->
+
+        <label for="editRole">
+
+            Role
+
+        </label>
+
+
+        <select id="editRole">
+
+            <option value="USER">
+
+                USER
+
+            </option>
+
+
+            <option value="ADMIN">
+
+                ADMIN
+
+            </option>
+
+        </select>
+
+
+
+        <!-- STATUS -->
+
+        <label for="editStatus">
+
+            Status
+
+        </label>
+
+
+        <select id="editStatus">
+
+            <option value="ACTIVE">
+
+                ACTIVE
+
+            </option>
+
+
+            <option value="INACTIVE">
+
+                INACTIVE
+
+            </option>
+
+        </select>
+
+
+
+        <!-- BUTTONS -->
+
+        <div class="modal-buttons">
+
+
+            <button onclick="updateUser()">
+
+                Save
 
             </button>
 
-        </div>
 
+            <button onclick="closeModal()">
 
-        <!-- USER TABLE -->
-        <div class="table-container">
+                Cancel
 
-            <table>
+            </button>
 
-                <thead>
-
-                    <tr>
-
-                        <th>ID</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Password</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="userTableBody">
-                </tbody>
-
-            </table>
 
         </div>
 
-    </main>
-
-
-
-    <!-- ========================= -->
-    <!-- EDIT USER MODAL -->
-    <!-- ========================= -->
-
-    <div id="editModal" class="modal">
-
-        <div class="modal-content">
-
-            <h2>Edit User</h2>
-
-
-            <input
-                type="hidden"
-                id="editId"
-            >
-
-
-            <!-- FULL NAME -->
-
-            <label for="editFullName">
-                Full Name
-            </label>
-
-            <input
-                type="text"
-                id="editFullName"
-                placeholder="Enter full name"
-            >
-
-
-            <!-- EMAIL -->
-
-            <label for="editEmail">
-                Email
-            </label>
-
-            <input
-                type="email"
-                id="editEmail"
-                placeholder="Enter email"
-            >
-            <label for="editPassword">
-    New Password
-</label>
-
-<input
-    type="password"
-    id="editPassword"
-    placeholder="Leave blank to keep current password"
->
-
-
-            <!-- ROLE -->
-
-            <label for="editRole">
-                Role
-            </label>
-
-            <select id="editRole">
-
-                <option value="USER">
-                    USER
-                </option>
-
-                <option value="ADMIN">
-                    ADMIN
-                </option>
-
-            </select>
-
-
-            <!-- STATUS -->
-
-            <label for="editStatus">
-                Status
-            </label>
-
-            <select id="editStatus">
-
-                <option value="ACTIVE">
-                    ACTIVE
-                </option>
-
-                <option value="INACTIVE">
-                    INACTIVE
-                </option>
-
-            </select>
-
-
-            <!-- BUTTONS -->
-
-            <div class="modal-buttons">
-
-                <button onclick="updateUser()">
-                    Save
-                </button>
-
-                <button onclick="closeModal()">
-                    Cancel
-                </button>
-
-            </div>
-
-        </div>
 
     </div>
 
+</div>
 
 
-    <!-- ========================= -->
-    <!-- ADD USER MODAL -->
-    <!-- ========================= -->
 
-    <div id="addUserModal" class="modal">
+<!-- ========================= -->
+<!-- ADD USER MODAL -->
+<!-- ========================= -->
 
-        <div class="modal-content">
-
-            <h2>Add User</h2>
+<div id="addUserModal" class="modal">
 
 
-            <!-- FULL NAME -->
-
-            <label for="addFullName">
-                Full Name
-            </label>
-
-            <input
-                type="text"
-                id="addFullName"
-                placeholder="Enter full name"
-            >
+    <div class="modal-content">
 
 
-            <!-- EMAIL -->
-
-            <label for="addEmail">
-                Email
-            </label>
-
-            <input
-                type="email"
-                id="addEmail"
-                placeholder="Enter email"
-            >
+        <h2>Add User</h2>
 
 
-            <!-- PASSWORD -->
 
-            <label for="addPassword">
-                Password
-            </label>
+        <!-- FULL NAME -->
 
-            <input
-                type="password"
-                id="addPassword"
-                placeholder="Enter password"
-            >
+        <label for="addFullName">
+
+            Full Name
+
+        </label>
 
 
-            <!-- ROLE -->
-
-            <label for="addRole">
-                Role
-            </label>
-
-            <select id="addRole">
-
-                <option value="USER">
-                    USER
-                </option>
-
-                <option value="ADMIN">
-                    ADMIN
-                </option>
-
-            </select>
+        <input
+            type="text"
+            id="addFullName"
+            placeholder="Enter full name"
+        >
 
 
-            <!-- STATUS -->
 
-            <label for="addStatus">
-                Status
-            </label>
+        <!-- EMAIL -->
 
-            <select id="addStatus">
+        <label for="addEmail">
 
-                <option value="ACTIVE">
-                    ACTIVE
-                </option>
+            Email
 
-                <option value="INACTIVE">
-                    INACTIVE
-                </option>
-
-            </select>
+        </label>
 
 
-            <!-- BUTTONS -->
+        <input
+            type="email"
+            id="addEmail"
+            placeholder="Enter email"
+        >
 
-            <div class="modal-buttons">
 
-                <button onclick="addUser()">
-                    Add User
-                </button>
 
-                <button onclick="closeAddUserModal()">
-                    Cancel
-                </button>
+        <!-- PASSWORD -->
 
-            </div>
+        <label for="addPassword">
+
+            Password
+
+        </label>
+
+
+        <input
+            type="password"
+            id="addPassword"
+            placeholder="Enter password"
+        >
+
+
+
+        <!-- ROLE -->
+
+        <label for="addRole">
+
+            Role
+
+        </label>
+
+
+        <select id="addRole">
+
+            <option value="USER">
+
+                USER
+
+            </option>
+
+
+            <option value="ADMIN">
+
+                ADMIN
+
+            </option>
+
+        </select>
+
+
+
+        <!-- STATUS -->
+
+        <label for="addStatus">
+
+            Status
+
+        </label>
+
+
+        <select id="addStatus">
+
+            <option value="ACTIVE">
+
+                ACTIVE
+
+            </option>
+
+
+            <option value="INACTIVE">
+
+                INACTIVE
+
+            </option>
+
+        </select>
+
+
+
+        <!-- BUTTONS -->
+
+        <div class="modal-buttons">
+
+
+            <button onclick="addUser()">
+
+                Add User
+
+            </button>
+
+
+            <button onclick="closeAddUserModal()">
+
+                Cancel
+
+            </button>
+
 
         </div>
 
+
     </div>
 
+</div>
 
 
-    <!-- JAVASCRIPT -->
 
-    <script src="user-management.js"></script>
+<!-- ========================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================= -->
+
+<script src="user-management.js"></script>
+```
 
 </body>
 
