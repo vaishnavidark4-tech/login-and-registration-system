@@ -39,9 +39,9 @@ async function login() {
 
 
     try {
-
-        const response = await fetch(
-        "https://login-and-registration-system-qggm.onrender.com/api/auth/login",
+const response = await fetch(
+    "https://login-and-registration-system-new.onrender.com/api/auth/login",
+      
             {
                 method: "POST",
 
