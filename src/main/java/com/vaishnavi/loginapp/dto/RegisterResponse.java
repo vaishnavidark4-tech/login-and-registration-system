@@ -9,7 +9,11 @@ public class RegisterResponse {
     public RegisterResponse() {
     }
 
-    public RegisterResponse(Long id, String fullName, String email) {
+    public RegisterResponse(
+            Long id,
+            String fullName,
+            String email) {
+
         this.id = id;
         this.fullName = fullName;
         this.email = email;

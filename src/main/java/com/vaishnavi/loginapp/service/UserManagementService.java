@@ -1,6 +1,7 @@
 package com.vaishnavi.loginapp.service;
 
 import com.vaishnavi.loginapp.entity.User;
+import org.springframework.transaction.annotation.Transactional;
 import com.vaishnavi.loginapp.repository.UserRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -172,6 +173,7 @@ public class UserManagementService {
     // DELETE USER
     // ==========================================
 
+    @Transactional
     public void deleteUser(Long id) {
 
         if (!userRepository.existsById(id)) {
@@ -181,7 +183,10 @@ public class UserManagementService {
             );
         }
 
+        // Remove user from all groups first
+        userRepository.removeUserFromGroups(id);
 
+        // Now delete the user
         userRepository.deleteById(id);
     }
 }

@@ -3,10 +3,12 @@
 
 import com.vaishnavi.loginapp.entity.User;
 import com.vaishnavi.loginapp.service.UserManagementService;
+import com.vaishnavi.loginapp.dto.UserResponseDTO;
 
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -31,9 +33,12 @@ public class UserManagementController {
     // ==========================================
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserResponseDTO> getAllUsers() {
 
-        return userManagementService.getAllUsers();
+        return userManagementService.getAllUsers()
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
 
@@ -42,10 +47,12 @@ public class UserManagementController {
     // ==========================================
 
     @GetMapping("/{id}")
-    public User getUserById(
+    public UserResponseDTO getUserById(
             @PathVariable Long id) {
 
-        return userManagementService.getUserById(id);
+        return convertToDTO(
+                userManagementService.getUserById(id)
+        );
     }
 
 
@@ -54,10 +61,12 @@ public class UserManagementController {
     // ==========================================
 
     @PostMapping
-    public User addUser(
+    public UserResponseDTO addUser(
             @RequestBody User user) {
 
-        return userManagementService.addUser(user);
+        return convertToDTO(
+                userManagementService.addUser(user)
+        );
     }
 
 
@@ -66,13 +75,15 @@ public class UserManagementController {
     // ==========================================
 
     @PutMapping("/{id}")
-    public User updateUser(
+    public UserResponseDTO updateUser(
             @PathVariable Long id,
             @RequestBody User updatedUser) {
 
-        return userManagementService.updateUser(
-                id,
-                updatedUser
+        return convertToDTO(
+                userManagementService.updateUser(
+                        id,
+                        updatedUser
+                )
         );
     }
 
@@ -88,6 +99,24 @@ public class UserManagementController {
         userManagementService.deleteUser(id);
 
         return "User deleted successfully";
+    }
+
+
+    // ==========================================
+    // CONVERT USER TO DTO
+    // ==========================================
+
+    private UserResponseDTO convertToDTO(User user) {
+
+        return new UserResponseDTO(
+                user.getId(),
+                user.getFullName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getRole(),
+                user.getLastLogin(),
+                user.getStatus()
+        );
     }
 }
 
