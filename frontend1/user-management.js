@@ -1,7 +1,7 @@
-const API_URL = "https://login-and-registration-system-qggm.onrender.com/api/users";
-
+const API_URL = "http://localhost:8080/api/users";
 const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 const token = loggedInUser?.token;
+
 
 // =========================
 // LOAD USERS
@@ -9,155 +9,170 @@ const token = loggedInUser?.token;
 
 function loadUsers() {
 
-const tableBody = document.getElementById("userTableBody");
-const message = document.getElementById("message");
+    const tableBody = document.getElementById("userTableBody");
+    const message = document.getElementById("message");
 
-message.textContent = "Loading users...";
+    message.textContent = "Loading users...";
 
-fetch(API_URL, {
-    method: "GET",
-    headers: {
-        "Authorization": "Bearer " + token
-    }
-})
-.then(response => {
+    fetch(API_URL, {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(response => {
 
-    if (!response.ok) {
-        throw new Error("Unable to load users");
-    }
+        if (!response.ok) {
+            throw new Error("Unable to load users");
+        }
 
-    return response.json();
+        return response.json();
 
-})
-.then(users => {
+    })
+    .then(users => {
 
-    tableBody.innerHTML = "";
+        tableBody.innerHTML = "";
 
-    if (users.length === 0) {
+        if (users.length === 0) {
+
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+
+            cell.colSpan = 7;
+            cell.textContent = "No users found.";
+
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+
+            message.textContent = "";
+
+            return;
+        }
+
+        users.forEach(user => {
+
+            const row = document.createElement("tr");
+
+
+            // ID
+
+            const idCell = document.createElement("td");
+            idCell.textContent = user.id;
+
+
+            // FULL NAME
+
+            const nameCell = document.createElement("td");
+            nameCell.textContent = user.fullName || "";
+
+
+            // EMAIL
+
+            const emailCell = document.createElement("td");
+            emailCell.textContent = user.email || "";
+
+
+            // PASSWORD
+
+            const passwordCell = document.createElement("td");
+            passwordCell.textContent = "••••••••";
+
+
+            // ROLE
+
+            const roleCell = document.createElement("td");
+            roleCell.textContent = user.role || "USER";
+
+
+            // STATUS
+
+            const statusCell = document.createElement("td");
+            statusCell.textContent = user.status || "ACTIVE";
+
+
+            // ACTIONS
+
+            const actionCell = document.createElement("td");
+
+
+            // =========================
+            // EDIT BUTTON
+            // =========================
+
+            const editButton = document.createElement("button");
+
+            editButton.textContent = "Edit";
+            editButton.className = "edit-btn";
+
+            editButton.onclick = function () {
+
+                openEditModal(
+                    user.id,
+                    user.fullName || "",
+                    user.email || "",
+                    user.role || "USER",
+                    user.status || "ACTIVE"
+                );
+
+            };
+
+
+            // =========================
+            // DELETE BUTTON
+            // =========================
+
+            const deleteButton = document.createElement("button");
+
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "delete-btn";
+
+            deleteButton.onclick = function () {
+
+                deleteUser(user.id);
+
+            };
+
+
+            actionCell.appendChild(editButton);
+            actionCell.appendChild(deleteButton);
+
+
+            row.appendChild(idCell);
+            row.appendChild(nameCell);
+            row.appendChild(emailCell);
+            row.appendChild(passwordCell);
+            row.appendChild(roleCell);
+            row.appendChild(statusCell);
+            row.appendChild(actionCell);
+
+            tableBody.appendChild(row);
+
+        });
+
+        message.textContent = "";
+
+    })
+    .catch(error => {
+
+        console.error("Load users error:", error);
+
+        tableBody.innerHTML = "";
 
         const row = document.createElement("tr");
         const cell = document.createElement("td");
 
         cell.colSpan = 7;
-        cell.textContent = "No users found.";
+        cell.textContent = "Unable to load users.";
 
         row.appendChild(cell);
         tableBody.appendChild(row);
 
-        message.textContent = "";
-
-        return;
-    }
-
-
-    users.forEach(user => {
-
-        const row = document.createElement("tr");
-
-
-        const idCell = document.createElement("td");
-        idCell.textContent = user.id;
-
-
-        const nameCell = document.createElement("td");
-        nameCell.textContent = user.fullName || "";
-
-
-        const emailCell = document.createElement("td");
-        emailCell.textContent = user.email || "";
-
-
-        const passwordCell = document.createElement("td");
-        passwordCell.textContent = "••••••••";
-
-
-        const roleCell = document.createElement("td");
-        roleCell.textContent = user.role || "USER";
-
-
-        const statusCell = document.createElement("td");
-        statusCell.textContent = user.status || "ACTIVE";
-
-
-        const actionCell = document.createElement("td");
-
-
-        // EDIT BUTTON
-
-        const editButton = document.createElement("button");
-
-        editButton.textContent = "Edit";
-        editButton.className = "edit-btn";
-
-        editButton.onclick = function () {
-
-            openEditModal(
-                user.id,
-                user.fullName || "",
-                user.email || "",
-                user.role || "USER",
-                user.status || "ACTIVE"
-            );
-
-        };
-
-
-        // DELETE BUTTON
-
-        const deleteButton = document.createElement("button");
-
-        deleteButton.textContent = "Delete";
-        deleteButton.className = "delete-btn";
-
-        deleteButton.onclick = function () {
-
-            deleteUser(user.id);
-
-        };
-
-
-        actionCell.appendChild(editButton);
-        actionCell.appendChild(deleteButton);
-
-
-        row.appendChild(idCell);
-        row.appendChild(nameCell);
-        row.appendChild(emailCell);
-        row.appendChild(passwordCell);
-        row.appendChild(roleCell);
-        row.appendChild(statusCell);
-        row.appendChild(actionCell);
-
-
-        tableBody.appendChild(row);
+        message.textContent = "Unable to connect to the server.";
 
     });
 
-
-    message.textContent = "";
-
-})
-.catch(error => {
-
-    console.error("Load users error:", error);
-
-    tableBody.innerHTML = "";
-
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
-
-    cell.colSpan = 7;
-    cell.textContent = "Unable to load users.";
-
-    row.appendChild(cell);
-    tableBody.appendChild(row);
-
-    message.textContent = "Unable to connect to the server.";
-
-});
-
-
 }
+
 
 // =========================
 // ADD USER MODAL
@@ -165,26 +180,24 @@ fetch(API_URL, {
 
 function openAddUserModal() {
 
-
-document.getElementById("addUserModal").style.display = "flex";
-
+    document.getElementById("addUserModal").style.display = "flex";
 
 }
+
 
 function closeAddUserModal() {
 
+    document.getElementById("addUserModal").style.display = "none";
 
-document.getElementById("addUserModal").style.display = "none";
+    document.getElementById("addFullName").value = "";
+    document.getElementById("addEmail").value = "";
+    document.getElementById("addPassword").value = "";
 
-document.getElementById("addFullName").value = "";
-document.getElementById("addEmail").value = "";
-document.getElementById("addPassword").value = "";
-
-document.getElementById("addRole").value = "USER";
-document.getElementById("addStatus").value = "ACTIVE";
-
+    document.getElementById("addRole").value = "USER";
+    document.getElementById("addStatus").value = "ACTIVE";
 
 }
+
 
 // =========================
 // ADD USER
@@ -192,149 +205,144 @@ document.getElementById("addStatus").value = "ACTIVE";
 
 function addUser() {
 
+    const fullName =
+        document.getElementById("addFullName").value.trim();
 
-const fullName =
-    document.getElementById("addFullName").value.trim();
+    const email =
+        document.getElementById("addEmail").value.trim();
 
-const email =
-    document.getElementById("addEmail").value.trim();
+    const password =
+        document.getElementById("addPassword").value.trim();
 
-const password =
-    document.getElementById("addPassword").value.trim();
+    const role =
+        document.getElementById("addRole").value;
 
-const role =
-    document.getElementById("addRole").value;
-
-const status =
-    document.getElementById("addStatus").value;
-
-
-if (!fullName || !email || !password) {
-
-    alert("Please fill all required fields.");
-
-    return;
-}
+    const status =
+        document.getElementById("addStatus").value;
 
 
-console.log("Sending user:", {
-    fullName: fullName,
-    email: email,
-    role: role,
-    status: status
-});
+    if (!fullName || !email || !password) {
+
+        alert("Please fill all required fields.");
+
+        return;
+    }
 
 
-fetch(API_URL, {
-
-    method: "POST",
-
-    headers: {
-
-        "Content-Type": "application/json",
-
-        "Authorization": "Bearer " + token
-
-    },
-
-    body: JSON.stringify({
-
+    console.log("Sending user:", {
         fullName: fullName,
         email: email,
-        password: password,
         role: role,
         status: status
+    });
+
+
+    fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json",
+
+            "Authorization": "Bearer " + token
+
+        },
+
+        body: JSON.stringify({
+
+            fullName: fullName,
+            email: email,
+            password: password,
+            role: role,
+            status: status
+
+        })
 
     })
+    .then(async response => {
 
-})
+        const responseText = await response.text();
 
-.then(async response => {
-
-    const responseText = await response.text();
-
-    console.log(
-        "Backend response:",
-        response.status,
-        responseText
-    );
-
-
-    if (!response.ok) {
-
-        throw new Error(
-            "Server returned " +
-            response.status +
-            ": " +
+        console.log(
+            "Backend response:",
+            response.status,
             responseText
         );
 
-    }
 
-    return responseText;
+        if (!response.ok) {
 
-})
+            throw new Error(
+                "Server returned " +
+                response.status +
+                ": " +
+                responseText
+            );
 
-.then(() => {
+        }
 
-    alert("User added successfully!");
+        return responseText;
 
-    closeAddUserModal();
+    })
+    .then(() => {
 
-    loadUsers();
+        alert("User added successfully!");
 
-})
+        closeAddUserModal();
 
-.catch(error => {
+        loadUsers();
 
-    console.error("Add user error:", error);
+    })
+    .catch(error => {
 
-    alert(
-        "Unable to add user.\n\n" +
-        error.message
-    );
+        console.error("Add user error:", error);
 
-});
+        alert(
+            "Unable to add user.\n\n" +
+            error.message
+        );
+
+    });
 
 }
+
 
 // =========================
 // EDIT USER MODAL
 // =========================
 
 function openEditModal(
-id,
-fullName,
-email,
-role,
-status
+    id,
+    fullName,
+    email,
+    role,
+    status
 ) {
 
+    document.getElementById("editId").value = id;
 
-document.getElementById("editId").value = id;
+    document.getElementById("editFullName").value = fullName;
 
-document.getElementById("editFullName").value = fullName;
+    document.getElementById("editEmail").value = email;
 
-document.getElementById("editEmail").value = email;
+    document.getElementById("editPassword").value = "";
 
-document.getElementById("editPassword").value = "";
+    document.getElementById("editRole").value = role;
 
-document.getElementById("editRole").value = role;
+    document.getElementById("editStatus").value = status;
 
-document.getElementById("editStatus").value = status;
-
-document.getElementById("editModal").style.display = "flex";
-
+    document.getElementById("editModal").style.display = "flex";
 
 }
+
 
 function closeModal() {
 
-
-document.getElementById("editModal").style.display = "none";
-
+    document.getElementById("editModal").style.display = "none";
 
 }
+
 
 // =========================
 // UPDATE USER
@@ -342,116 +350,112 @@ document.getElementById("editModal").style.display = "none";
 
 function updateUser() {
 
+    const id =
+        document.getElementById("editId").value;
 
-const id =
-    document.getElementById("editId").value;
+    const fullName =
+        document.getElementById("editFullName").value.trim();
 
-const fullName =
-    document.getElementById("editFullName").value.trim();
+    const email =
+        document.getElementById("editEmail").value.trim();
 
-const email =
-    document.getElementById("editEmail").value.trim();
+    const password =
+        document.getElementById("editPassword").value.trim();
 
-const password =
-    document.getElementById("editPassword").value.trim();
+    const role =
+        document.getElementById("editRole").value;
 
-const role =
-    document.getElementById("editRole").value;
-
-const status =
-    document.getElementById("editStatus").value;
-
-
-if (!fullName || !email) {
-
-    alert("Please fill all required fields.");
-
-    return;
-}
+    const status =
+        document.getElementById("editStatus").value;
 
 
-const userData = {
+    if (!fullName || !email) {
 
-    fullName: fullName,
-    email: email,
-    role: role,
-    status: status
+        alert("Please fill all required fields.");
 
-};
+        return;
+    }
 
 
-if (password !== "") {
+    const userData = {
 
-    userData.password = password;
+        fullName: fullName,
+        email: email,
+        role: role,
+        status: status
 
-}
-
-
-fetch(API_URL + "/" + id, {
-
-    method: "PUT",
-
-    headers: {
-
-        "Content-Type": "application/json",
-
-        "Authorization": "Bearer " + token
-
-    },
-
-    body: JSON.stringify(userData)
-
-})
-
-.then(async response => {
-
-    const responseText = await response.text();
-
-    console.log(
-        "Update response:",
-        response.status,
-        responseText
-    );
+    };
 
 
-    if (!response.ok) {
+    if (password !== "") {
 
-        throw new Error(
-            "Server returned " +
-            response.status +
-            ": " +
-            responseText
-        );
+        userData.password = password;
 
     }
 
-    return responseText;
 
-})
+    fetch(API_URL + "/" + id, {
 
-.then(() => {
+        method: "PUT",
 
-    alert("User updated successfully!");
+        headers: {
 
-    closeModal();
+            "Content-Type": "application/json",
 
-    loadUsers();
+            "Authorization": "Bearer " + token
 
-})
+        },
 
-.catch(error => {
+        body: JSON.stringify(userData)
 
-    console.error("Update user error:", error);
+    })
+    .then(async response => {
 
-    alert(
-        "Unable to update user.\n\n" +
-        error.message
-    );
+        const responseText = await response.text();
 
-});
-```
+        console.log(
+            "Update response:",
+            response.status,
+            responseText
+        );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Server returned " +
+                response.status +
+                ": " +
+                responseText
+            );
+
+        }
+
+        return responseText;
+
+    })
+    .then(() => {
+
+        alert("User updated successfully!");
+
+        closeModal();
+
+        loadUsers();
+
+    })
+    .catch(error => {
+
+        console.error("Update user error:", error);
+
+        alert(
+            "Unable to update user.\n\n" +
+            error.message
+        );
+
+    });
 
 }
+
 
 // =========================
 // DELETE USER
@@ -459,72 +463,68 @@ fetch(API_URL + "/" + id, {
 
 function deleteUser(id) {
 
-```
-if (!confirm("Are you sure you want to delete this user?")) {
+    if (!confirm("Are you sure you want to delete this user?")) {
 
-    return;
-}
-
-
-fetch(API_URL + "/" + id, {
-
-    method: "DELETE",
-
-    headers: {
-
-        "Authorization": "Bearer " + token
-
+        return;
     }
 
-})
 
-.then(async response => {
+    fetch(API_URL + "/" + id, {
 
-    const responseText = await response.text();
+        method: "DELETE",
 
-    console.log(
-        "Delete response:",
-        response.status,
-        responseText
-    );
+        headers: {
 
+            "Authorization": "Bearer " + token
 
-    if (!response.ok) {
+        }
 
-        throw new Error(
-            "Server returned " +
-            response.status +
-            ": " +
+    })
+    .then(async response => {
+
+        const responseText = await response.text();
+
+        console.log(
+            "Delete response:",
+            response.status,
             responseText
         );
 
-    }
 
-    return responseText;
+        if (!response.ok) {
 
-})
+            throw new Error(
+                "Server returned " +
+                response.status +
+                ": " +
+                responseText
+            );
 
-.then(() => {
+        }
 
-    alert("User deleted successfully!");
+        return responseText;
 
-    loadUsers();
+    })
+    .then(() => {
 
-})
+        alert("User deleted successfully!");
 
-.catch(error => {
+        loadUsers();
 
-    console.error("Delete user error:", error);
+    })
+    .catch(error => {
 
-    alert(
-        "Unable to delete user.\n\n" +
-        error.message
-    );
+        console.error("Delete user error:", error);
 
-});
+        alert(
+            "Unable to delete user.\n\n" +
+            error.message
+        );
 
+    });
 
 }
+
 
 // =========================
 // LOGOUT
@@ -532,15 +532,14 @@ fetch(API_URL + "/" + id, {
 
 function logout() {
 
+    localStorage.removeItem("token");
 
-localStorage.removeItem("token");
+    localStorage.removeItem("loggedInUser");
 
-localStorage.removeItem("loggedInUser");
-
-window.location.href = "login.html";
-
+    window.location.href = "login.html";
 
 }
+
 
 // =========================
 // PAGE LOAD
@@ -548,8 +547,6 @@ window.location.href = "login.html";
 
 document.addEventListener("DOMContentLoaded", function () {
 
-
-loadUsers();
-
+    loadUsers();
 
 });

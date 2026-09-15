@@ -1,54 +1,127 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Internal Management System</title>
 
-<title>Dashboard</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 
 <body>
 
-<div class="login-box">
+    <!-- Header -->
+    <header class="dashboard-header">
 
-    <div class="avatar">
-        🎉
-    </div>
+        <div class="header-left">
+            <h1>Internal Management System</h1>
+            <p>Dashboard</p>
+        </div>
 
-    <h2>Welcome!</h2>
+        <button id="logoutButton" class="logout-button">
+            Logout
+        </button>
 
-    <p>You have successfully logged in.</p>
+    </header>
 
-    <button onclick="logout()">
 
-        Logout
+    <!-- Main Dashboard -->
+    <main class="dashboard-container">
 
-    </button>
+        <section class="welcome-section">
+            <h2>Welcome Back! 👋</h2>
+            <p>Here's an overview of your management system.</p>
+        </section>
 
-</div>
 
-<script>
+        <!-- Statistics Cards -->
+        <section class="stats-grid">
 
-function logout(){
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div>
+                    <h3>Total Users</h3>
+                    <p id="totalUsers">--</p>
+                </div>
+            </div>
 
-    localStorage.removeItem("token");
 
-    window.location.href="login.html";
+            <div class="stat-card">
+                <div class="stat-icon">🏢</div>
+                <div>
+                    <h3>Total Groups</h3>
+                    <p id="totalGroups">--</p>
+                </div>
+            </div>
 
-}
 
-if(!localStorage.getItem("token")){
+            <div class="stat-card">
+                <div class="stat-icon">🟢</div>
+                <div>
+                    <h3>Active Users</h3>
+                    <p id="activeUsers">--</p>
+                </div>
+            </div>
 
-    window.location.href="login.html";
 
-}
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div>
+                    <h3>Active Groups</h3>
+                    <p id="activeGroups">--</p>
+                </div>
+            </div>
 
-</script>
+        </section>
+
+
+        <!-- Quick Actions -->
+        <section class="quick-actions">
+
+            <h2>Quick Actions</h2>
+
+            <div class="action-grid">
+
+                <div class="action-card">
+                    <div class="action-icon">👤</div>
+
+                    <h3>User Management</h3>
+
+                    <p>
+                        Add, edit, delete and manage system users.
+                    </p>
+
+                    <button id="userManagementButton">
+                        Manage Users
+                    </button>
+                </div>
+
+
+                <div class="action-card">
+                    <div class="action-icon">👥</div>
+
+                    <h3>Group Management</h3>
+
+                    <p>
+                        Create groups and manage group members.
+                    </p>
+
+                    <button id="groupManagementButton">
+                        Manage Groups
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="dashboard.js"></script>
 
 </body>
 
