@@ -1,11 +1,11 @@
 package com.vaishnavi.loginapp.service;
 
 import com.vaishnavi.loginapp.entity.User;
-import org.springframework.transaction.annotation.Transactional;
 import com.vaishnavi.loginapp.repository.UserRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,7 +30,19 @@ public class UserManagementService {
 
     public List<User> getAllUsers() {
 
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+
+        System.out.println("========== USER DEBUG ==========");
+        System.out.println("Total users found: " + users.size());
+
+        for (User user : users) {
+            System.out.println("User ID: " + user.getId());
+            System.out.println("User Email: " + user.getEmail());
+        }
+
+        System.out.println("================================");
+
+        return users;
     }
 
 
@@ -74,8 +86,7 @@ public class UserManagementService {
         );
 
 
-        // Set default values only if
-        // role/status were not provided
+        // Set default role
 
         if (user.getRole() == null ||
                 user.getRole().trim().isEmpty()) {
@@ -84,12 +95,16 @@ public class UserManagementService {
         }
 
 
+        // Set default status
+
         if (user.getStatus() == null ||
                 user.getStatus().trim().isEmpty()) {
 
             user.setStatus("Active");
         }
 
+
+        // Phone is not used in User Management
 
         user.setPhone(null);
 
@@ -183,10 +198,14 @@ public class UserManagementService {
             );
         }
 
+
         // Remove user from all groups first
+
         userRepository.removeUserFromGroups(id);
 
-        // Now delete the user
+
+        // Delete user
+
         userRepository.deleteById(id);
     }
 }

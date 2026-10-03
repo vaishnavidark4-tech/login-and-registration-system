@@ -7,6 +7,7 @@ import com.vaishnavi.loginapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -45,18 +46,32 @@ public class GroupService {
     // =========================
 
     public Group createGroup(Group group) {
+
+        Optional<Group> existingGroup =
+                groupRepository.findByName(group.getName());
+
+        if (existingGroup.isPresent()) {
+            throw new RuntimeException("Group name already exists");
+        }
+
         return groupRepository.save(group);
     }
-
-
     // =========================
     // UPDATE GROUP
     // =========================
-
     public Group updateGroup(Long id, Group updatedGroup) {
 
         Group existingGroup = groupRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Group not found"));
+
+        Optional<Group> groupWithSameName =
+                groupRepository.findByName(updatedGroup.getName());
+
+        if (groupWithSameName.isPresent()
+                && !groupWithSameName.get().getId().equals(id)) {
+
+            throw new RuntimeException("Group name already exists");
+        }
 
         existingGroup.setName(updatedGroup.getName());
         existingGroup.setDescription(updatedGroup.getDescription());
@@ -65,18 +80,18 @@ public class GroupService {
         return groupRepository.save(existingGroup);
     }
 
-
     // =========================
     // DELETE GROUP
     // =========================
 
     public void deleteGroup(Long id) {
 
-        if (!groupRepository.existsById(id)) {
-            throw new RuntimeException("Group not found");
-        }
+        Group group = groupRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
 
-        groupRepository.deleteById(id);
+        group.setStatus("Inactive");
+
+        groupRepository.save(group);
     }
 
 

@@ -1,5 +1,4 @@
-
-        package com.vaishnavi.loginapp.controller;
+package com.vaishnavi.loginapp.controller;
 
 import com.vaishnavi.loginapp.entity.User;
 import com.vaishnavi.loginapp.service.UserManagementService;
@@ -27,11 +26,6 @@ public class UserManagementController {
         this.userManagementService = userManagementService;
     }
 
-
-    // ==========================================
-    // GET ALL USERS
-    // ==========================================
-
     @GetMapping
     public List<UserResponseDTO> getAllUsers() {
 
@@ -40,11 +34,6 @@ public class UserManagementController {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-
-
-    // ==========================================
-    // GET USER BY ID
-    // ==========================================
 
     @GetMapping("/{id}")
     public UserResponseDTO getUserById(
@@ -55,11 +44,6 @@ public class UserManagementController {
         );
     }
 
-
-    // ==========================================
-    // ADD USER
-    // ==========================================
-
     @PostMapping
     public UserResponseDTO addUser(
             @RequestBody User user) {
@@ -69,28 +53,15 @@ public class UserManagementController {
         );
     }
 
-
-    // ==========================================
-    // UPDATE USER
-    // ==========================================
-
     @PutMapping("/{id}")
     public UserResponseDTO updateUser(
             @PathVariable Long id,
             @RequestBody User updatedUser) {
 
         return convertToDTO(
-                userManagementService.updateUser(
-                        id,
-                        updatedUser
-                )
+                userManagementService.updateUser(id, updatedUser)
         );
     }
-
-
-    // ==========================================
-    // DELETE USER
-    // ==========================================
 
     @DeleteMapping("/{id}")
     public String deleteUser(
@@ -100,11 +71,6 @@ public class UserManagementController {
 
         return "User deleted successfully";
     }
-
-
-    // ==========================================
-    // CONVERT USER TO DTO
-    // ==========================================
 
     private UserResponseDTO convertToDTO(User user) {
 
@@ -119,4 +85,3 @@ public class UserManagementController {
         );
     }
 }
-

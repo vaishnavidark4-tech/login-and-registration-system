@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chain Management</title>
+
+    <link rel="stylesheet" href="chain-management.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="page-header">
+            <div>
+                <h1>Chain Management</h1>
+                <p>Manage company chain records</p>
+            </div>
+
+            <button id="addChainButton" class="primary-btn">
+                + Add Chain
+            </button>
+        </div>
+
+
+        <!-- Filter Section -->
+
+        <div class="filter-section">
+
+            <label for="groupFilter">Filter by Group</label>
+
+            <select id="groupFilter">
+                <option value="">All Groups</option>
+            </select>
+
+        </div>
+
+
+        <!-- Message -->
+
+        <div id="message"></div>
+
+
+        <!-- Chain Form -->
+
+        <div id="chainFormContainer" class="form-container hidden">
+
+            <h2 id="formTitle">Add Chain</h2>
+
+            <form id="chainForm">
+
+                <input type="hidden" id="chainId">
+
+                <div class="form-group">
+
+                    <label for="companyName">
+                        Company Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="companyName"
+                        placeholder="Enter company name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="gstn">
+                        GSTN Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="gstn"
+                        placeholder="Enter GSTN number"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="group">
+                        Group
+                    </label>
+
+                    <select id="group">
+                        <option value="">Select Group</option>
+                    </select>
+
+                </div>
+
+
+                <div class="form-buttons">
+
+                    <button
+                        type="submit"
+                        id="saveChainButton"
+                        class="primary-btn">
+                        Save Chain
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelButton"
+                        class="secondary-btn">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- Chain Table -->
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Company Name</th>
+                        <th>GSTN</th>
+                        <th>Group</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="chainsTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <script src="chain-management.js"></script>
+
+</body>
+</html>

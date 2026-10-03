@@ -130,7 +130,7 @@ public class AuthService {
                         user.getEmail()
                 );
 
-
+        System.out.println("JWT generated successfully");
         return new LoginResponse(token);
     }
 }
