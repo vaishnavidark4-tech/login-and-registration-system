@@ -27,22 +27,20 @@ registerForm.addEventListener("submit", async function (event) {
 
     try {
 
-        const response = await fetch(
-            "https://login-and-registration-system-new.onrender.com/api/auth/register",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    fullName: fullName,
-                    email: email,
-                    password: password
-                })
-            }
-        );
+      const response = await fetch(
+    "https://login-and-registration-system-1-rhcn.onrender.com/api/auth/register",
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            fullName: fullName,
+            email: email,
+            password: password
+        })
+    }
+);
 
 
         const data = await response.json();

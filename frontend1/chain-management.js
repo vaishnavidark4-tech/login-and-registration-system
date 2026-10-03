@@ -1,6 +1,5 @@
-const API_URL = "http://localhost:8080/api/chains";
-const GROUPS_API_URL = "http://localhost:8080/api/groups";
-
+const API_URL = "https://login-and-registration-system-1-rhcn.onrender.com/api/chains";
+const GROUPS_API_URL = "https://login-and-registration-system-1-rhcn.onrender.com/api/groups";
 const addChainButton = document.getElementById("addChainButton");
 
 const chainFormContainer =

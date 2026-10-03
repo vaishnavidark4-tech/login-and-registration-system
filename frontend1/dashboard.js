@@ -1,46 +1,38 @@
+const BACKEND_URL =
+    "https://login-and-registration-system-1-rhcn.onrender.com";
 
-const USERS_API_URL = "http://localhost:8080/api/users";
-const GROUPS_API_URL = "http://localhost:8080/api/groups";
+const USERS_API_URL =
+    `${BACKEND_URL}/api/users`;
 
-// Get logged-in user
-const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-const token = loggedInUser?.token;
-
-
-// Check login session
-if (!token) {
-    alert("Login session expired. Please login again.");
-    window.location.href = "login.html";
-}
+const GROUPS_API_URL =
+    `${BACKEND_URL}/api/groups`;
 
 
-// Elements
-const totalUsers = document.getElementById("totalUsers");
-const totalGroups = document.getElementById("totalGroups");
-const activeUsers = document.getElementById("activeUsers");
-const activeGroups = document.getElementById("activeGroups");
+document.addEventListener("DOMContentLoaded", function () {
+    loadDashboardData();
+});
 
-const userManagementButton =
-    document.getElementById("userManagementButton");
-
-const groupManagementButton =
-    document.getElementById("groupManagementButton");
-
-const logoutButton =
-    document.getElementById("logoutButton");
-
-
-// =========================
-// LOAD DASHBOARD DATA
-// =========================
 
 async function loadDashboardData() {
 
+    const loggedInUser =
+        JSON.parse(localStorage.getItem("loggedInUser"));
+
+    const token = loggedInUser?.token;
+
+    if (!token) {
+        console.error("No login token found.");
+        return;
+    }
+
     try {
 
+        // Load Users
         const usersResponse = await fetch(USERS_API_URL, {
+            method: "GET",
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
             }
         });
 
@@ -50,10 +42,12 @@ async function loadDashboardData() {
 
         const users = await usersResponse.json();
 
-
+        // Load Groups
         const groupsResponse = await fetch(GROUPS_API_URL, {
+            method: "GET",
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
             }
         });
 
@@ -64,75 +58,31 @@ async function loadDashboardData() {
         const groups = await groupsResponse.json();
 
 
-        // Total counts
-        totalUsers.textContent = users.length;
-        totalGroups.textContent = groups.length;
+        // Update dashboard counts
+        const totalUsersElement =
+            document.getElementById("totalUsers");
+
+        const totalGroupsElement =
+            document.getElementById("totalGroups");
 
 
-        // Active users
-        const activeUserCount = users.filter(
-            user =>
-                user.status &&
-                user.status.toLowerCase() === "active"
-        ).length;
+        if (totalUsersElement) {
+            totalUsersElement.textContent = users.length;
+        }
 
-        activeUsers.textContent = activeUserCount;
+        if (totalGroupsElement) {
+            totalGroupsElement.textContent = groups.length;
+        }
 
 
-        // Active groups
-        const activeGroupCount = groups.filter(
-            group =>
-                group.status &&
-                group.status.toLowerCase() === "active"
-        ).length;
-
-        activeGroups.textContent = activeGroupCount;
-
+        console.log("Users loaded:", users);
+        console.log("Groups loaded:", groups);
 
     } catch (error) {
 
-        console.error("Dashboard loading error:", error);
-
-        totalUsers.textContent = "!";
-        totalGroups.textContent = "!";
-        activeUsers.textContent = "!";
-        activeGroups.textContent = "!";
-
-        alert("Unable to load dashboard data.");
+        console.error(
+            "Dashboard loading error:",
+            error
+        );
     }
 }
-
-
-// =========================
-// NAVIGATION
-// =========================
-
-userManagementButton.addEventListener("click", () => {
-    window.location.href = "user-management.html";
-});
-
-
-groupManagementButton.addEventListener("click", () => {
-    window.location.href = "group-management.html";
-});
-
-
-// =========================
-// LOGOUT
-// =========================
-
-logoutButton.addEventListener("click", () => {
-
-    localStorage.removeItem("loggedInUser");
-    localStorage.removeItem("token");
-
-    window.location.href = "login.html";
-});
-
-
-// =========================
-// START DASHBOARD
-// =========================
-
-loadDashboardData();
-

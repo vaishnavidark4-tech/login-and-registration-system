@@ -1,6 +1,5 @@
 const API_URL = "http://localhost:8080/api/groups";
-const USERS_API_URL = "http://localhost:8080/api/users";
-
+const USERS_API_URL = "https://login-and-registration-system-new.onrender.com/api/users";
 
 /* =========================
    PAGE ELEMENTS
