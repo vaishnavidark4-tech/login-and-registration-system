@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zone Management</title>
+    <link rel="stylesheet" href="zone-management.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <header class="page-header">
+            <h1>Zone Management</h1>
+            <p>Manage and organize your zones</p>
+        </header>
+
+        <!-- Dashboard Summary -->
+        <section class="summary-cards">
+
+            <div class="summary-card">
+                <h3>Total Groups</h3>
+                <p id="totalGroups">0</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Total Chains</h3>
+                <p id="totalChains">0</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Total Brands</h3>
+                <p id="totalBrands">0</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Total Zones</h3>
+                <p id="totalZones">0</p>
+            </div>
+
+        </section>
+
+        <!-- Add Zone -->
+        <section class="form-section">
+            <h2>Add Zone</h2>
+
+            <form id="zoneForm">
+
+                <input
+                    type="text"
+                    id="zoneName"
+                    placeholder="Enter Zone Name"
+                    required
+                >
+
+                <select id="brandSelect" required>
+                    <option value="">Select Brand</option>
+                </select>
+
+                <button type="submit" id="submitBtn">
+                    Add Zone
+                </button>
+
+            </form>
+        </section>
+
+        <!-- Filters -->
+        <section class="filter-section">
+            <h2>Filter Zones</h2>
+
+            <div class="filters">
+
+                <select id="brandFilter">
+                    <option value="">All Brands</option>
+                </select>
+
+                <select id="companyFilter">
+                    <option value="">All Companies</option>
+                </select>
+
+                <select id="groupFilter">
+                    <option value="">All Groups</option>
+                </select>
+
+                <button type="button" id="resetFilters">
+                    Reset Filters
+                </button>
+
+            </div>
+        </section>
+
+        <!-- Zone Table -->
+        <section class="table-section">
+            <h2>Zone List</h2>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Zone</th>
+                            <th>Brand</th>
+                            <th>Company</th>
+                            <th>Group</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="zoneTableBody">
+                        <tr>
+                            <td colspan="7">Loading zones...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <p id="message"></p>
+
+    </div>
+
+    <script src="zone-management.js"></script>
+
+</body>
+</html>

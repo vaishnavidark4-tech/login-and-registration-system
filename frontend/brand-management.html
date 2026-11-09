@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Management</title>
+    <link rel="stylesheet" href="brand-management.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Brand Management</h1>
+        <p>Manage brands associated with your chains.</p>
+
+        <div class="form-container">
+            <h2 id="formTitle">Add New Brand</h2>
+
+            <form id="brandForm">
+                <input type="hidden" id="brandId">
+
+                <label for="brandName">Brand Name</label>
+                <input type="text" id="brandName"
+                       placeholder="Enter brand name" required maxlength="50">
+
+                <label for="chainId">Select Chain</label>
+                <select id="chainId" required>
+                    <option value="">Select Chain</option>
+                </select>
+
+                <label for="isActive">Status</label>
+                <select id="isActive">
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+
+                <button type="submit" id="submitBtn">Add Brand</button>
+                <button type="button" id="cancelBtn" hidden>Cancel</button>
+            </form>
+
+            <p id="message"></p>
+        </div>
+
+        <div class="table-container">
+            <h2>Brand Records</h2>
+
+            <label for="filterChain">Filter by Chain</label>
+            <select id="filterChain">
+                <option value="">All Chains</option>
+            </select>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Brand Name</th>
+                        <th>Chain</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="brandTableBody">
+                    <tr>
+                        <td colspan="5">Loading brands...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="brand-management.js"></script>
+</body>
+</html>

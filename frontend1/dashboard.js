@@ -1,15 +1,46 @@
-const BACKEND_URL =
-    "https://login-and-registration-system-1-rhcn.onrender.com";
 
-const USERS_API_URL =
-    `${BACKEND_URL}/api/users`;
+const BACKEND_URL = "http://localhost:8080";
 
-const GROUPS_API_URL =
-    `${BACKEND_URL}/api/groups`;
+const USERS_API_URL = `${BACKEND_URL}/api/users`;
+const GROUPS_API_URL = `${BACKEND_URL}/api/groups`;
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
+
     loadDashboardData();
+
+    // User Management navigation
+    document.getElementById("userManagementButton")
+        ?.addEventListener("click", function () {
+            window.location.href = "user-management.html";
+        });
+
+    // Group Management navigation
+    document.getElementById("groupManagementButton")
+        ?.addEventListener("click", function () {
+            window.location.href = "group-management.html";
+        });
+
+    // Chain Management navigation
+    document.getElementById("chainManagementButton")
+        ?.addEventListener("click", function () {
+            window.location.href = "chain-management.html";
+        });
+
+    // Brand Management navigation
+    document.getElementById("brandManagementButton")
+        ?.addEventListener("click", function () {
+            window.location.href = "brand-management.html";
+        });
+
+    // Logout
+    document.getElementById("logoutButton")
+        ?.addEventListener("click", function () {
+            localStorage.removeItem("loggedInUser");
+            window.location.href = "login.html";
+        });
+
 });
 
 
@@ -57,7 +88,6 @@ async function loadDashboardData() {
 
         const groups = await groupsResponse.json();
 
-
         // Update dashboard counts
         const totalUsersElement =
             document.getElementById("totalUsers");
@@ -65,6 +95,11 @@ async function loadDashboardData() {
         const totalGroupsElement =
             document.getElementById("totalGroups");
 
+        const activeUsersElement =
+            document.getElementById("activeUsers");
+
+        const activeGroupsElement =
+            document.getElementById("activeGroups");
 
         if (totalUsersElement) {
             totalUsersElement.textContent = users.length;
@@ -74,6 +109,21 @@ async function loadDashboardData() {
             totalGroupsElement.textContent = groups.length;
         }
 
+        // Update active counts
+        if (activeUsersElement) {
+            activeUsersElement.textContent =
+                users.filter(user =>
+                    user.isActive === true ||
+                    user.status === "Active"
+                ).length;
+        }
+
+        if (activeGroupsElement) {
+            activeGroupsElement.textContent =
+                groups.filter(group =>
+                    group.status === "Active"
+                ).length;
+        }
 
         console.log("Users loaded:", users);
         console.log("Groups loaded:", groups);

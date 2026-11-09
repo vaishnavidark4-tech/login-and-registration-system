@@ -1,0 +1,157 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f9;
+    padding: 30px;
+    color: #333;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+h1 {
+    color: #263445;
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+.container > p {
+    margin-bottom: 25px;
+    color: #666;
+}
+
+.form-container,
+.table-container {
+    background: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #263445;
+    font-size: 21px;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+    max-width: 500px;
+}
+
+label {
+    font-weight: bold;
+    color: #444;
+}
+
+input,
+select {
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 14px;
+    background: white;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+button {
+    padding: 11px 18px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+#cancelBtn {
+    background: #6b7280;
+}
+
+#cancelBtn:hover {
+    background: #4b5563;
+}
+
+#message {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.table-container > select {
+    max-width: 300px;
+    margin: 10px 0 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+}
+
+th,
+td {
+    padding: 13px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #263445;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.edit-btn {
+    background: #16a34a;
+}
+
+.edit-btn:hover {
+    background: #15803d;
+}
+
+.delete-btn {
+    background: #dc2626;
+}
+
+.delete-btn:hover {
+    background: #b91c1c;
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 12px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 650px;
+    }
+}
